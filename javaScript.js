@@ -127,6 +127,7 @@ function FiltrarProducto(listaProductos) {
 
       galeriaProductos.innerHTML = "";
       MostrarProducto(resultadoFiltro);
+      agregarproducto();
       console.log(resultadoFiltro);
     });
   });
