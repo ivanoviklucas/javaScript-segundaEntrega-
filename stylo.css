@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+h1 {
+  color: black;
+  background-color: rgb(255, 0, 200);
+}
+.tipo-de-producto {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+main {
+  height: 90vh;
+}
+.card  div {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+  justify-content: space-between;
+}
+.tipo-de-producto .item {
+  list-style: none;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgb(195, 7, 233);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgb(19, 16, 16);
+  text-align: center;
+}
+.tipo-de-producto .item:hover {
+  background-color: red;
+  cursor: pointer;
+}
+.comprar-producto {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  grid-template-rows: repeat(3, 250px);
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.comprar-producto .card {
+  width: 200px;
+  height: 230px;
+  padding: 20px;
+  border-radius: 30px;
+  background: rgba(195, 7, 233, 0.062);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgb(19, 16, 16);
+  text-align: center;
+}
+.comprar-producto .card .card-img-top {
+  width: 120px;
+  height: 120px;
+}
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  margin-top: 30px;
+  height: 200px;
+  background-color: white;
+}
+footer #icono-carrito {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+}
+#carrito-modal {
+  position: fixed;
+  top: 0;
+  left: -450px;
+  width: 30vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: left 0.5s ease-in-out;
+
+  /* 👇 Agregamos esto: */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto; /* Permite scroll vertical */
+  padding: 20px; /* Para que no quede todo pegado al borde */
+  box-sizing: border-box;
+}
+
+#carrito-modal.visible {
+  left: 0;
+}
+
+
+.item-carrito:first-child {
+  margin-top: 20cm;
+}
+
+.imagen-carrito {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.item-carrito p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.item-carrito h5 {
+  color: red;
+}
+.btn-limpiar {
+  align-self: flex-end;  /* lo alinea a la derecha */
+  margin-top: auto;      /* lo empuja al final del flex container */
+  padding: 10px 20px;
+  background-color: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+.btn-limpiar:hover {
+  background-color: #ff1f4b;
+}
