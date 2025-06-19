@@ -72,39 +72,68 @@ const listaProductos = [
     imagen: "imagenes/imagen-mouse3.jpg",
   },
 ];
+function MostrarProducto(listaProducto) {
+  let galeriaProductos = document.querySelector(".comprar-producto");
 
-let galeriaProductos = document.querySelector(".comprar-producto");
+  galeriaProductos.innerHTML = ""
 
-listaProductos.forEach((producto) => {
-  let tarjeta = document.createElement("div");
-  tarjeta.classList.add("card");
+  listaProducto.forEach((producto) => {
+    let tarjeta = document.createElement("div");
+    tarjeta.classList.add("card");
 
-  let imagen = document.createElement("img");
-  imagen.src = producto.imagen;
-  imagen.classList.add("card-img-top");
+    let imagen = document.createElement("img");
+    imagen.src = producto.imagen;
+    imagen.classList.add("card-img-top");
 
-  let cuerpoTarjeta = document.createElement("div");
+    let cuerpoTarjeta = document.createElement("div");
 
-  let nombre = document.createElement("h5");
-  nombre.textContent = producto.nombre;
+    let nombre = document.createElement("h5");
+    nombre.textContent = producto.nombre;
 
-  let precio = document.createElement("p");
-  precio.textContent = `$${producto.precio}`;
+    let precio = document.createElement("p");
+    precio.textContent = `$${producto.precio}`;
 
-  let boton = document.createElement("a");
-  boton.textContent = "Agregar al carrito";
-  boton.classList.add("añadir-carrito");
-  boton.href = "#";
-  boton.classList.add("btn", "btn-primary");
+    let boton = document.createElement("a");
+    boton.textContent = "Agregar al carrito";
+    boton.classList.add("añadir-carrito", "btn", "btn-primary");
+    boton.href = "#";
 
-  cuerpoTarjeta.append(nombre, precio, boton);
-  tarjeta.append(imagen, cuerpoTarjeta);
-  galeriaProductos.appendChild(tarjeta);
-});
+    cuerpoTarjeta.append(nombre, precio, boton);
+    tarjeta.append(imagen, cuerpoTarjeta);
+    galeriaProductos.appendChild(tarjeta);
+  });
+}
 
-// ✅ CAMBIO CLAVE: Inicializar el carrito con datos del localStorage si existen
+MostrarProducto(listaProductos);
 let carritovacio = JSON.parse(localStorage.getItem("carrito")) || [];
 let carritoAbierto = false;
+
+function FiltrarProducto(listaProductos) {
+   let galeriaProductos = document.querySelector(".comprar-producto");
+  let seleccionarFiltro = document.querySelectorAll(".categoria-item");
+  
+  seleccionarFiltro.forEach((categoriaItem) => {
+    categoriaItem.addEventListener("click", function () {
+      let resultadoFiltro;
+
+      if (this.textContent === "TODOS") {
+        resultadoFiltro = listaProductos;
+      } else {
+        resultadoFiltro = listaProductos.filter(
+          (producto) => producto.tipo === this.textContent
+        );
+      
+      }
+
+      galeriaProductos.innerHTML = "";
+      MostrarProducto(resultadoFiltro);
+      console.log(resultadoFiltro);
+    });
+  });
+}
+
+
+FiltrarProducto(listaProductos);
 
 function mostrarCarrito() {
   const contenedorcarrito = document.getElementById("carrito-modal");
@@ -130,24 +159,32 @@ function agregarproducto() {
 
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
-      let tarjetaProducto = boton.parentElement.parentElement;
+      let confirmarProducto = confirm(
+        "¿esta seguro que desea agregarlo al carrito?"
+      );
+      if (confirmarProducto) {
+        let tarjetaProducto = boton.parentElement.parentElement;
 
-      let nombre = tarjetaProducto.querySelector("h5").textContent;
-      let precioTexto = tarjetaProducto.querySelector("p").textContent;
-      let precio = parseFloat(precioTexto.replace("$", ""));
-      let rutaImagen = tarjetaProducto.querySelector("img").getAttribute("src");
+        let nombre = tarjetaProducto.querySelector("h5").textContent;
+        let precioTexto = tarjetaProducto.querySelector("p").textContent;
+        let precio = parseFloat(precioTexto.replace("$", ""));
+        let rutaImagen = tarjetaProducto
+          .querySelector("img")
+          .getAttribute("src");
 
-      let producto = {
-        nombre: nombre,
-        precio: precio,
-        imagen: rutaImagen,
-      };
+        let producto = {
+          nombre: nombre,
+          precio: precio,
+          imagen: rutaImagen,
+        };
 
-      carritovacio.push(producto);
-      localStorage.setItem("carrito", JSON.stringify(carritovacio));
+        carritovacio.push(producto);
+        localStorage.setItem("carrito", JSON.stringify(carritovacio));
 
-      // 🔁 Volvemos a cargar todo el carrito para que se vea ordenado
-      cargarCarrito();
+        // 🔁 Volvemos a cargar todo el carrito para que se vea ordenado
+        cargarCarrito();
+      } else {
+      }
     });
   });
 }
