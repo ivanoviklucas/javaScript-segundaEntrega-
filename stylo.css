@@ -105,6 +105,11 @@ footer #icono-carrito {
   left: 0;
 }
 
+#carrito-modal p{
+  color: white;
+  font-weight: bolder;
+ font-size: 20px;
+}
 
 .item-carrito:first-child {
   margin-top: 20cm;
@@ -129,18 +134,21 @@ footer #icono-carrito {
 .item-carrito h5 {
   color: red;
 }
-.btn-limpiar {
-  align-self: flex-end;  /* lo alinea a la derecha */
-  margin-top: auto;      /* lo empuja al final del flex container */
+
+.btn-limpiar,
+.btn-confirmar {
   padding: 10px 20px;
   background-color: #ff4d6d;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  /* QUITAR o comentar estas dos líneas ↓↓↓ */
+  /* align-self: flex-end;
+     margin-top: auto; */
 }
-
 
 .btn-limpiar:hover {
   background-color: #ff1f4b;
 }
+

@@ -75,7 +75,7 @@ const listaProductos = [
 function MostrarProducto(listaProducto) {
   let galeriaProductos = document.querySelector(".comprar-producto");
 
-  galeriaProductos.innerHTML = ""
+  galeriaProductos.innerHTML = "";
 
   listaProducto.forEach((producto) => {
     let tarjeta = document.createElement("div");
@@ -109,9 +109,9 @@ let carritovacio = JSON.parse(localStorage.getItem("carrito")) || [];
 let carritoAbierto = false;
 
 function FiltrarProducto(listaProductos) {
-   let galeriaProductos = document.querySelector(".comprar-producto");
+  let galeriaProductos = document.querySelector(".comprar-producto");
   let seleccionarFiltro = document.querySelectorAll(".categoria-item");
-  
+
   seleccionarFiltro.forEach((categoriaItem) => {
     categoriaItem.addEventListener("click", function () {
       let resultadoFiltro;
@@ -122,7 +122,6 @@ function FiltrarProducto(listaProductos) {
         resultadoFiltro = listaProductos.filter(
           (producto) => producto.tipo === this.textContent
         );
-      
       }
 
       galeriaProductos.innerHTML = "";
@@ -132,7 +131,6 @@ function FiltrarProducto(listaProductos) {
     });
   });
 }
-
 
 FiltrarProducto(listaProductos);
 
@@ -198,7 +196,7 @@ function cargarCarrito() {
   let carritoGuardado = localStorage.getItem("carrito");
   if (carritoGuardado) {
     const carrito = JSON.parse(carritoGuardado);
-
+    let totalcarrito = 0;
     carrito.forEach((producto) => {
       const img = document.createElement("img");
       img.src = producto.imagen;
@@ -207,22 +205,33 @@ function cargarCarrito() {
 
       const p = document.createElement("p");
       p.textContent = `${producto.nombre} - $${producto.precio}`;
+      totalcarrito += producto.precio;
+
       contenedorModal.appendChild(p);
     });
-
     if (!document.querySelector(".btn-limpiar")) {
       const btnLimpiar = document.createElement("button");
       btnLimpiar.textContent = "Limpiar carrito";
       btnLimpiar.className = "btn-limpiar";
+      let btnconfimarProducto = document.createElement("button");
+      btnconfimarProducto.textContent = "confirmar compra";
+      btnconfimarProducto.classList.add("btn-confirmar");
 
       btnLimpiar.onclick = () => {
         localStorage.removeItem("carrito");
         carritovacio = [];
         contenedorModal.innerHTML = "";
-      };
+      };         
+      console.log(totalcarrito);
+    let muestraTotal = document.createElement("p");
+    muestraTotal.textContent = "EL TOTAL DE SU COMPRA ES:" + " " + totalcarrito;
+    contenedorModal.appendChild(muestraTotal);
 
       contenedorModal.appendChild(btnLimpiar);
+        contenedorModal.appendChild(btnconfimarProducto);
+
     }
+   
   }
 }
 agregarproducto();
