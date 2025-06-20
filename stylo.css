@@ -136,7 +136,8 @@ footer #icono-carrito {
 }
 
 .btn-limpiar,
-.btn-confirmar {
+.btn-confirmar,
+.btn-eliminarProducto {
   padding: 10px 20px;
   background-color: #ff4d6d;
   color: white;

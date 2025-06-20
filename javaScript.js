@@ -204,6 +204,7 @@ function cargarCarrito() {
       totalcarrito += producto.precio;
       let btnEliminardelcarrito = document.createElement("button");
       btnEliminardelcarrito.textContent = "eliminar del carrito";
+      btnEliminardelcarrito.classList.add("btn-eliminarProducto")
       btnEliminardelcarrito.addEventListener("click", function(){
         EliminarProducto(producto)
       })
@@ -217,7 +218,6 @@ function cargarCarrito() {
       let btnconfimarProducto = document.createElement("button");
       btnconfimarProducto.textContent = "confirmar compra";
       btnconfimarProducto.classList.add("btn-confirmar");
-
       btnLimpiar.onclick = () => {
         localStorage.removeItem("carrito");
         carritovacio = [];
