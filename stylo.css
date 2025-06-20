@@ -143,9 +143,7 @@ footer #icono-carrito {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  /* QUITAR o comentar estas dos líneas ↓↓↓ */
-  /* align-self: flex-end;
-     margin-top: auto; */
+
 }
 
 .btn-limpiar:hover {

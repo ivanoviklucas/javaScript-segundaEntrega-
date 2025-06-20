@@ -116,7 +116,7 @@ function FiltrarProducto(listaProductos) {
     categoriaItem.addEventListener("click", function () {
       let resultadoFiltro;
 
-      if (this.textContent === "TODOS") {
+      if (this.textContent === "todos") {
         resultadoFiltro = listaProductos;
       } else {
         resultadoFiltro = listaProductos.filter(
