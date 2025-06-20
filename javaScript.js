@@ -155,7 +155,6 @@ function mostrarCarrito() {
 mostrarCarrito();
 function agregarproducto() {
   let botones = document.querySelectorAll(".añadir-carrito");
-
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
       let confirmarProducto = confirm(
@@ -170,7 +169,6 @@ function agregarproducto() {
         let rutaImagen = tarjetaProducto
           .querySelector("img")
           .getAttribute("src");
-
         let producto = {
           nombre: nombre,
           precio: precio,
@@ -179,8 +177,6 @@ function agregarproducto() {
 
         carritovacio.push(producto);
         localStorage.setItem("carrito", JSON.stringify(carritovacio));
-
-        // 🔁 Volvemos a cargar todo el carrito para que se vea ordenado
         cargarCarrito();
       } else {
       }
@@ -206,7 +202,12 @@ function cargarCarrito() {
       const p = document.createElement("p");
       p.textContent = `${producto.nombre} - $${producto.precio}`;
       totalcarrito += producto.precio;
-
+      let btnEliminardelcarrito = document.createElement("button");
+      btnEliminardelcarrito.textContent = "eliminar del carrito";
+      btnEliminardelcarrito.addEventListener("click", function(){
+        EliminarProducto(producto)
+      })
+      contenedorModal.appendChild(btnEliminardelcarrito);
       contenedorModal.appendChild(p);
     });
     if (!document.querySelector(".btn-limpiar")) {
@@ -221,18 +222,30 @@ function cargarCarrito() {
         localStorage.removeItem("carrito");
         carritovacio = [];
         contenedorModal.innerHTML = "";
-      };         
+      };
       console.log(totalcarrito);
-    let muestraTotal = document.createElement("p");
-    muestraTotal.textContent = "EL TOTAL DE SU COMPRA ES:" + " " + totalcarrito;
-    contenedorModal.appendChild(muestraTotal);
+      let muestraTotal = document.createElement("p");
+      muestraTotal.textContent =
+        "EL TOTAL DE SU COMPRA ES:" + " " + totalcarrito;
+      contenedorModal.appendChild(muestraTotal);
 
       contenedorModal.appendChild(btnLimpiar);
-        contenedorModal.appendChild(btnconfimarProducto);
-
+      contenedorModal.appendChild(btnconfimarProducto);
     }
-   
   }
+}
+function EliminarProducto(producto) {
+  // Buscamos el índice (posición) en el array "carritovacio" del primer elemento cuyo 'id' coincida con el 'id' del producto que quiero eliminar
+  let indice = carritovacio.findIndex((item) => item.id === producto.id);
+
+  // Si encontramos ese producto en el array (es decir, el índice no es -1)
+  if (indice !== -1) {
+    // Eliminamos 1 elemento en la posición 'indice' del array, que es el producto que queremos quitar
+    carritovacio.splice(indice, 1);
+    localStorage.setItem("carrito", JSON.stringify(carritovacio));
+    cargarCarrito(); // Actualizar la vista
+  }
+
 }
 agregarproducto();
 cargarCarrito();
