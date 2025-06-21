@@ -227,7 +227,7 @@ function cargarCarrito() {
       btnconfimarProducto.onclick = () => {
       let confirmacionCompra= confirm("¿desea realizar la compra?") 
       if(confirmacionCompra){ 
-      alert(`usted compro ${totalcarrito}`)}
+      alert(`usted compro por $${totalcarrito}`)}
       else{}
       };
       console.log(totalcarrito);
