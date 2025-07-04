@@ -1,0 +1,74 @@
+[
+  {
+    "tipo": "auriculares",
+    "marca": "NOBLEX",
+    "nombre": "Hp350btw Blanco",
+    "precio": 5000,
+    "id": "A1",
+    "imagen": "imagenes/imagen-auricular1.jpg"
+  },
+  {
+    "tipo": "auriculares",
+    "marca": "GENÉRICO",
+    "nombre": "Bluetooth Vincha Micro SD Inalámbrico",
+    "precio": 15000,
+    "id": "A2",
+    "imagen": "imagenes/imagen-auricular2.jpg"
+  },
+  {
+    "tipo": "auriculares",
+    "marca": "GORSUN",
+    "nombre": "Wireless E66 para Niños 5.0",
+    "precio": 25000,
+    "id": "A3",
+    "imagen": "imagenes/imagen-auricular3.jpg"
+  },
+  {
+    "tipo": "parlante",
+    "marca": "PHILIPS",
+    "nombre": "Portátil a Batería BT60BK/77",
+    "precio": 25000,
+    "id": "P1",
+    "imagen": "imagenes/imagen-cargador3.jpg"
+  },
+  {
+    "tipo": "parlante",
+    "marca": "JBL",
+    "nombre": "Flip 6 Bluetooth 20W",
+    "precio": 148000,
+    "id": "P2",
+    "imagen": "imagenes/imagen-cargador2.jpg"
+  },
+  {
+    "tipo": "parlante",
+    "marca": "XION",
+    "nombre": "XI-XT880 Recargable 18000W",
+    "precio": 125000,
+    "id": "P3",
+    "imagen": "imagenes/imagen-parlante1.jpg"
+  },
+  {
+    "tipo": "mouse",
+    "marca": "XION",
+    "nombre": "Óptico LED Recargable Silencioso Bluetooth",
+    "precio": 22000,
+    "id": "M1",
+    "imagen": "imagenes/imagen-mouse1.jpg"
+  },
+  {
+    "tipo": "mouse",
+    "marca": "GENÉRICO",
+    "nombre": "Mouse Inalámbrico LED Silencioso USB",
+    "precio": 18000,
+    "id": "M2",
+    "imagen": "imagenes/imagen-mouse2.jpg"
+  },
+  {
+    "tipo": "mouse",
+    "marca": "LOGITECH",
+    "nombre": "M170 Azul Inalámbrico",
+    "precio": 26000,
+    "id": "M3",
+    "imagen": "imagenes/imagen-mouse3.jpg"
+  }
+]

@@ -1,77 +1,16 @@
-const listaProductos = [
-  {
-    tipo: "auriculares",
-    marca: "NOBLEX",
-    nombre: "Hp350btw Blanco",
-    precio: 5000,
-    id: "A1",
-    imagen: "imagenes/imagen-auricular1.jpg",
-  },
-  {
-    tipo: "auriculares",
-    marca: "GENÉRICO",
-    nombre: "Bluetooth Vincha Micro SD Inalámbrico",
-    precio: 15000,
-    id: "A2",
-    imagen: "imagenes/imagen-auricular2.jpg",
-  },
-  {
-    tipo: "auriculares",
-    marca: "GORSUN",
-    nombre: "Wireless E66 para Niños 5.0",
-    precio: 25000,
-    id: "A3",
-    imagen: "imagenes/imagen-auricular3.jpg",
-  },
-  {
-    tipo: "parlante",
-    marca: "PHILIPS",
-    nombre: "Portátil a Batería BT60BK/77",
-    precio: 25000,
-    id: "P1",
-    imagen: "imagenes/imagen-cargador3.jpg",
-  },
-  {
-    tipo: "parlante",
-    marca: "JBL",
-    nombre: "Flip 6 Bluetooth 20W",
-    precio: 148000,
-    id: "P2",
-    imagen: "imagenes/imagen-cargador2.jpg",
-  },
-  {
-    tipo: "parlante",
-    marca: "XION",
-    nombre: "XI-XT880 Recargable 18000W",
-    precio: 125000,
-    id: "P3",
-    imagen: "imagenes/imagen-parlante1.jpg",
-  },
-  {
-    tipo: "mouse",
-    marca: "XION",
-    nombre: "Óptico LED Recargable Silencioso Bluetooth",
-    precio: 22000,
-    id: "M1",
-    imagen: "imagenes/imagen-mouse1.jpg",
-  },
-  {
-    tipo: "mouse",
-    marca: "GENÉRICO",
-    nombre: "Mouse Inalámbrico LED Silencioso USB",
-    precio: 18000,
-    id: "M2",
-    imagen: "imagenes/imagen-mouse2.jpg",
-  },
-  {
-    tipo: "mouse",
-    marca: "LOGITECH",
-    nombre: "M170 Azul Inalámbrico",
-    precio: 26000,
-    id: "M3",
-    imagen: "imagenes/imagen-mouse3.jpg",
-  },
-];
+const listaProductos = [];
+async function cargarProducto() {
+  try {
+    const respuesta = await fetch(`/productos.json`);
+    const datos = await respuesta.json();
+   MostrarProducto(datos);
+    MostrarProducto(datos);
+    FiltrarProducto(datos);
+    agregarproducto(datos);
+  } catch(error) {
+    console.error("error al mostrar productos",error);
+  }
+}
 function MostrarProducto(listaProducto) {
   let galeriaProductos = document.querySelector(".comprar-producto");
 
@@ -103,8 +42,7 @@ function MostrarProducto(listaProducto) {
     galeriaProductos.appendChild(tarjeta);
   });
 }
-
-MostrarProducto(listaProductos);
+mostrarCarrito(listaProductos)
 let carritovacio = JSON.parse(localStorage.getItem("carrito")) || [];
 let carritoAbierto = false;
 
@@ -177,6 +115,22 @@ function agregarproducto() {
 
         carritovacio.push(producto);
         localStorage.setItem("carrito", JSON.stringify(carritovacio));
+        Toastify({
+          text: "Producto agregado al carrito",
+          duration: 1000,
+          toast: true,
+          position: "right",
+          style: {
+            background: "white",
+            color: "black",
+            textAlign: "center",
+            borderRadius: "8px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            fontWeight: "bold",
+            width: "20%",
+          },
+        }).showToast();
+
         cargarCarrito();
       } else {
       }
@@ -204,13 +158,12 @@ function cargarCarrito() {
       totalcarrito += producto.precio;
       let btnEliminardelcarrito = document.createElement("button");
       btnEliminardelcarrito.textContent = "eliminar del carrito";
-      btnEliminardelcarrito.classList.add("btn-eliminarProducto")
-      btnEliminardelcarrito.addEventListener("click", function(){
-        EliminarProducto(producto)
-      })
+      btnEliminardelcarrito.classList.add("btn-eliminarProducto");
+      btnEliminardelcarrito.addEventListener("click", function () {
+        EliminarProducto(producto);
+      });
       contenedorModal.appendChild(p);
       contenedorModal.appendChild(btnEliminardelcarrito);
-      
     });
     if (!document.querySelector(".btn-limpiar")) {
       const btnLimpiar = document.createElement("button");
@@ -225,10 +178,19 @@ function cargarCarrito() {
         contenedorModal.innerHTML = "";
       };
       btnconfimarProducto.onclick = () => {
-      let confirmacionCompra= confirm("¿desea realizar la compra?") 
-      if(confirmacionCompra){ 
-      alert(`usted compro por $${totalcarrito}`)}
-      else{}
+        let confirmacionCompra = confirm("¿desea realizar la compra?");
+        if (confirmacionCompra) {
+          Swal.fire({
+            title: `usted compro por $${totalcarrito}`,
+            icon: "success",
+            customClass: {
+              popup: "mi-popup-rosa",
+              title: "mi-titulo-rosa",
+              confirmButton: "mi-boton-rosa",
+            },
+          });
+        } else {
+        }
       };
       console.log(totalcarrito);
       let muestraTotal = document.createElement("p");
@@ -252,7 +214,11 @@ function EliminarProducto(producto) {
     localStorage.setItem("carrito", JSON.stringify(carritovacio));
     cargarCarrito(); // Actualizar la vista
   }
-
 }
 agregarproducto();
 cargarCarrito();
+window.addEventListener("DOMContentLoaded", () => {
+  cargarProducto();
+  mostrarCarrito();
+  cargarCarrito();
+});
