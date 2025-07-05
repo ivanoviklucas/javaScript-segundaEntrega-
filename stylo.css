@@ -253,3 +253,7 @@ footer #icono-carrito {
   display: none; /* Se muestra cuando se necesite */
   font-family: 'Segoe UI', sans-serif;
 }
+
+.colorx{
+color: rgb(195, 7, 233);
+}
