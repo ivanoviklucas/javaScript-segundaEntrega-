@@ -1,7 +1,7 @@
 const listaProductos = [];
 async function cargarProducto() {
   try {
-    const respuesta = await fetch(`/productos.json`);
+    const respuesta = await fetch(`productos.json`)
     const datos = await respuesta.json();
     MostrarProducto(datos);
     MostrarProducto(datos);
