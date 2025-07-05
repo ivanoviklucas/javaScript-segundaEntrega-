@@ -3,12 +3,12 @@ async function cargarProducto() {
   try {
     const respuesta = await fetch(`/productos.json`);
     const datos = await respuesta.json();
-   MostrarProducto(datos);
+    MostrarProducto(datos);
     MostrarProducto(datos);
     FiltrarProducto(datos);
     agregarproducto(datos);
-  } catch(error) {
-    console.error("error al mostrar productos",error);
+  } catch (error) {
+    console.error("error al mostrar productos", error);
   }
 }
 function MostrarProducto(listaProducto) {
@@ -42,7 +42,7 @@ function MostrarProducto(listaProducto) {
     galeriaProductos.appendChild(tarjeta);
   });
 }
-mostrarCarrito(listaProductos)
+mostrarCarrito(listaProductos);
 let carritovacio = JSON.parse(localStorage.getItem("carrito")) || [];
 let carritoAbierto = false;
 
@@ -93,47 +93,58 @@ function mostrarCarrito() {
 mostrarCarrito();
 function agregarproducto() {
   let botones = document.querySelectorAll(".añadir-carrito");
+
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
-      let confirmarProducto = confirm(
-        "¿esta seguro que desea agregarlo al carrito?"
-      );
-      if (confirmarProducto) {
-        let tarjetaProducto = boton.parentElement.parentElement;
+      Swal.fire({
+        title: "¿Estás seguro que querés agregar este producto?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        customClass: {
+          popup: "mi-popup-rosa", // opcional
+          confirmButton: "mi-boton-rosa", // opcional
+          cancelButton: "mi-boton-cancelar", // opcional
+        },
+      }).then((resultado) => {
+        if (resultado.isConfirmed) {
+          let tarjetaProducto = boton.parentElement.parentElement;
 
-        let nombre = tarjetaProducto.querySelector("h5").textContent;
-        let precioTexto = tarjetaProducto.querySelector("p").textContent;
-        let precio = parseFloat(precioTexto.replace("$", ""));
-        let rutaImagen = tarjetaProducto
-          .querySelector("img")
-          .getAttribute("src");
-        let producto = {
-          nombre: nombre,
-          precio: precio,
-          imagen: rutaImagen,
-        };
+          let nombre = tarjetaProducto.querySelector("h5").textContent;
+          let precioTexto = tarjetaProducto.querySelector("p").textContent;
+          let precio = parseFloat(precioTexto.replace("$", ""));
+          let rutaImagen = tarjetaProducto
+            .querySelector("img")
+            .getAttribute("src");
 
-        carritovacio.push(producto);
-        localStorage.setItem("carrito", JSON.stringify(carritovacio));
-        Toastify({
-          text: "Producto agregado al carrito",
-          duration: 1000,
-          toast: true,
-          position: "right",
-          style: {
-            background: "white",
-            color: "black",
-            textAlign: "center",
-            borderRadius: "8px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            fontWeight: "bold",
-            width: "20%",
-          },
-        }).showToast();
+          let producto = {
+            nombre: nombre,
+            precio: precio,
+            imagen: rutaImagen,
+          };
 
-        cargarCarrito();
-      } else {
-      }
+          carritovacio.push(producto);
+          localStorage.setItem("carrito", JSON.stringify(carritovacio));
+
+          Toastify({
+            text: "Producto agregado al carrito",
+            duration: 1000,
+            position: "right",
+            style: {
+              background: "white",
+              color: "black",
+              textAlign: "center",
+              borderRadius: "8px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              fontWeight: "bold",
+              width: "20%",
+            },
+          }).showToast();
+
+          cargarCarrito();
+        }
+      });
     });
   });
 }
@@ -178,19 +189,30 @@ function cargarCarrito() {
         contenedorModal.innerHTML = "";
       };
       btnconfimarProducto.onclick = () => {
-        let confirmacionCompra = confirm("¿desea realizar la compra?");
-        if (confirmacionCompra) {
-          Swal.fire({
-            title: `usted compro por $${totalcarrito}`,
-            icon: "success",
-            customClass: {
-              popup: "mi-popup-rosa",
-              title: "mi-titulo-rosa",
-              confirmButton: "mi-boton-rosa",
-            },
-          });
-        } else {
-        }
+        Swal.fire({
+          title: "¿Deseás confirmar la compra?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Sí, confirmar",
+          cancelButtonText: "Cancelar",
+          customClass: {
+                popup: "mi-popup-rosa",
+                title: "mi-titulo-rosa",
+                confirmButton: "mi-boton-rosa",
+              },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: `usted compro por $${totalcarrito}`,
+              icon: "success",
+              customClass: {
+                popup: "mi-popup-rosa",
+                title: "mi-titulo-rosa",
+                confirmButton: "mi-boton-rosa",
+              },
+            });
+          }
+        });
       };
       console.log(totalcarrito);
       let muestraTotal = document.createElement("p");
